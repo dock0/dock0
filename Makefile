@@ -8,14 +8,9 @@ INSTALL_DIR=$(DESTDIR)/usr/lib/initcpio/install
 HOOKS_DIR=$(DESTDIR)/usr/lib/initcpio/hooks
 SCRIPT_DIR=$(DESTDIR)/usr/lib/initcpio
 
-DOC_FILES=$(wildcard docs/*)
-
-DOC_DIR=$(DESTDIR)/usr/share/doc/archiso
-
-
 all:
 
-install: install-program install-initcpio install-examples install-doc
+install: install-program install-initcpio
 
 install-program:
 	install -D -m 755 archiso/mkarchiso $(DESTDIR)/usr/bin/mkarchiso
@@ -26,16 +21,4 @@ install-initcpio:
 	install -m 644 -t $(HOOKS_DIR) $(HOOKS_FILES)
 	install -m 644 -t $(INSTALL_DIR) $(INSTALL_FILES)
 
-install-examples:
-	install -d -m 755 $(DESTDIR)/usr/share/archiso/
-	cp -a --no-preserve=ownership configs $(DESTDIR)/usr/share/archiso/
-
-install-doc:
-	install -d $(DOC_DIR)
-	install -m 644 -t $(DOC_DIR) $(DOC_FILES)
-
-dist:
-	git archive --format=tar --prefix=archiso-$(V)/ v$(V) | gzip -9 > archiso-$(V).tar.gz
-	gpg --detach-sign --use-agent archiso-$(V).tar.gz
-
-.PHONY: install install-program install-initcpio install-examples install-doc dist
+.PHONY: install install-program install-initcpio dist
