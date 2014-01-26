@@ -30,23 +30,29 @@ module Dock0
     end
 
     def prepare_device
-      `mkfs.ext2 #{@config['paths']['device']}`
-      `mount #{@config['paths']['device']} #{@config['paths']['mount']}`
+      puts "Making new filesystem on #{@config['paths']['device']}"
+      system "mkfs.ext2 #{@config['paths']['device']}"
+      puts "Mounting filesystem on #{@config['paths']['mount']}"
+      FileUtils.mkdir_p @config['paths']['mount']
+      system "mount #{@config['paths']['device']} #{@config['paths']['mount']}"
     end
 
     def install_packages
       File.read(@config['paths']['package_list']).split("\n").each do |package|
-        `pacstrap -G -M #{@config['paths']['mount']} #{package}`
+        puts "Installing #{package}"
+        system "pacstrap -G -M #{@config['paths']['mount']} #{package}"
       end
     end
 
     def apply_overlay
+      puts "Applying overlay from #{@config['paths']['overlay']}"
       overlay_path = @config['paths']['overlay'] + '/.'
       FileUtils.cp_r overlay_path, @config['paths']['mount']
     end
 
     def run_scripts
       Dir.glob(@config['paths']['scripts'] + '/*.rb').each do |script|
+        puts "Running #{script}"
         load script
       end
     end
@@ -54,9 +60,11 @@ module Dock0
     def run_commands
       cmds = @config['commands']
       cmds.fetch('chroot', []).each do |cmd|
+        puts "Running #{cmd} in chroot"
         `arch_chroot #{@config['path']['mount']} #{cmd}`
       end
       cmds.fetch('host', []).each do |cmd|
+        puts "Running #{cmd} on host"
         `#{cmd}`
       end
     end
