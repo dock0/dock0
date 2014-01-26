@@ -31,16 +31,16 @@ module Dock0
 
     def prepare_device
       puts "Making new filesystem on #{@config['paths']['device']}"
-      system "mkfs.ext2 #{@config['paths']['device']}"
+      `mkfs.ext2 #{@config['paths']['device']} 2>&1`
       puts "Mounting filesystem on #{@config['paths']['mount']}"
       FileUtils.mkdir_p @config['paths']['mount']
-      system "mount #{@config['paths']['device']} #{@config['paths']['mount']}"
+      `mount #{@config['paths']['device']} #{@config['paths']['mount']} 2>&1`
     end
 
     def install_packages
       File.read(@config['paths']['package_list']).split("\n").each do |package|
         puts "Installing #{package}"
-        system "pacstrap -G -M #{@config['paths']['mount']} #{package}"
+        `pacstrap -G -M #{@config['paths']['mount']} #{package} 2>&1`
       end
     end
 
@@ -61,11 +61,11 @@ module Dock0
       cmds = @config['commands']
       cmds.fetch('chroot', []).each do |cmd|
         puts "Running #{cmd} in chroot"
-        system "arch_chroot #{@config['path']['mount']} #{cmd}"
+        `arch_chroot #{@config['path']['mount']} #{cmd} 2>&1`
       end
       cmds.fetch('host', []).each do |cmd|
         puts "Running #{cmd} on host"
-        system "#{cmd}"
+        `#{cmd} 2>&1`
       end
     end
 
