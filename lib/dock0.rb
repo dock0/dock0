@@ -29,23 +29,29 @@ module Dock0
       end
     end
 
+    def run(cmd)
+      results = `#{cmd} 2>&1`
+      return if $?.success?
+      fail "Failed running #{cmd}:\n#{results}"
+    end
+
     def prepare_device
       puts "Making new filesystem on #{@config['paths']['device']}"
-      `mkfs.ext2 #{@config['paths']['device']} 2>&1`
+      run "mkfs.ext2 #{@config['paths']['device']}"
       puts "Mounting filesystem on #{@config['paths']['mount']}"
       FileUtils.mkdir_p @config['paths']['mount']
-      `mount #{@config['paths']['device']} #{@config['paths']['mount']} 2>&1`
+      run "mount #{@config['paths']['device']} #{@config['paths']['mount']}"
       puts "Making build FS at #{@config['paths']['build_file']}"
-      `dd if=/dev/zero of=#{@config['paths']['build_file']} bs=1M count=#{@config['root_size']} 2>&1`
-      `mkfs.ext2 -f #{@config['paths']['build_file']} 2>&1`
+      run "dd if=/dev/zero of=#{@config['paths']['build_file']} bs=1M count=#{@config['root_size']}"
+      run "mkfs.ext2 -F #{@config['paths']['build_file']}"
       puts "Mounting FS at #{@config['paths']['build']}"
-      `mount #{@config['paths']['build_file']} #{@config['paths']['build']} 2>&1`
+      run "mount #{@config['paths']['build_file']} #{@config['paths']['build']}"
     end
 
     def install_packages
       File.read(@config['paths']['package_list']).split("\n").each do |package|
         puts "Installing #{package}"
-        `pacstrap -G -M #{@config['paths']['build']} #{package} 2>&1`
+        run "pacstrap -G -M #{@config['paths']['build']} #{package}"
       end
     end
 
@@ -66,20 +72,20 @@ module Dock0
       cmds = @config['commands']
       cmds.fetch('chroot', []).each do |cmd|
         puts "Running #{cmd} in chroot"
-        `arch_chroot #{@config['path']['build']} #{cmd} 2>&1`
+        run "arch_chroot #{@config['path']['build']} #{cmd}"
       end
       cmds.fetch('host', []).each do |cmd|
         puts "Running #{cmd} on host"
-        `#{cmd} 2>&1`
+        run cmd
       end
     end
 
     def finalize
       puts "Packing up root FS"
-      `umount #{@config['paths']['build']} 2>&1`
-      `mksquashfs #{@config['paths']['build_file']} #{@config['paths']['mount']}/root.fs.sfs 2>&1`
+      run "umount #{@config['paths']['build']}"
+      run "mksquashfs #{@config['paths']['build_file']} #{@config['paths']['mount']}/root.fs.sfs"
       puts "Unmounting target device"
-      `umount #{@config['paths']['mount']}`
+      run "umount #{@config['paths']['mount']}"
     end
 
     def easy_mode
