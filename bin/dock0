@@ -1,2 +1,8 @@
 #!/usr/bin/env ruby
 
+require 'dock0'
+
+Dir.chdir File.dirname(ARGV.first)
+Dock0.new(ARGV).easy_mode
+
+puts 'All done!'

@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
 
   s.files       = `git ls-files`.split
   s.test_files  = `git ls-files spec/*`.split
-  s.executables = ['dock']
+  s.executables = ['dock0']
 
   s.add_development_dependency 'rubocop'
   s.add_development_dependency 'travis-lint'
