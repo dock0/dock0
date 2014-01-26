@@ -45,6 +45,7 @@ module Dock0
       run "dd if=/dev/zero of=#{@config['paths']['build_file']} bs=1M count=#{@config['root_size']}"
       run "mkfs.ext2 -F #{@config['paths']['build_file']}"
       puts "Mounting FS at #{@config['paths']['build']}"
+      FileUtils.mkdir_p @config['paths']['build']
       run "mount #{@config['paths']['build_file']} #{@config['paths']['build']}"
     end
 
