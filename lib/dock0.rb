@@ -61,11 +61,11 @@ module Dock0
       cmds = @config['commands']
       cmds.fetch('chroot', []).each do |cmd|
         puts "Running #{cmd} in chroot"
-        `arch_chroot #{@config['path']['mount']} #{cmd}`
+        system "arch_chroot #{@config['path']['mount']} #{cmd}"
       end
       cmds.fetch('host', []).each do |cmd|
         puts "Running #{cmd} on host"
-        `#{cmd}`
+        system "#{cmd}"
       end
     end
 
