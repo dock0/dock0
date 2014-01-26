@@ -31,7 +31,7 @@ module Dock0
 
     def run(cmd)
       results = `#{cmd} 2>&1`
-      return if $?.success?
+      return results if $?.success?
       fail "Failed running #{cmd}:\n#{results}"
     end
 
