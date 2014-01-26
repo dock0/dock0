@@ -73,7 +73,7 @@ module Dock0
       cmds = @config['commands']
       cmds.fetch('chroot', []).each do |cmd|
         puts "Running #{cmd} in chroot"
-        run "arch_chroot #{@config['paths']['build']} #{cmd}"
+        run "arch-chroot #{@config['paths']['build']} #{cmd}"
       end
       cmds.fetch('host', []).each do |cmd|
         puts "Running #{cmd} on host"
