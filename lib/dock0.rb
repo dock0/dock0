@@ -1,5 +1,6 @@
 require 'yaml'
 require 'fileutils'
+require 'english'
 
 ##
 # Dock0 provides an interface for building Arch images
@@ -31,7 +32,7 @@ module Dock0
 
     def run(cmd)
       results = `#{cmd} 2>&1`
-      return results if $?.success?
+      return results if $CHILD_STATUS.success?
       fail "Failed running #{cmd}:\n#{results}"
     end
 
@@ -41,12 +42,17 @@ module Dock0
       puts "Mounting filesystem on #{@config['paths']['mount']}"
       FileUtils.mkdir_p @config['paths']['mount']
       run "mount #{@config['paths']['device']} #{@config['paths']['mount']}"
+    end
+
+    def prepare_root
       puts "Making build FS at #{@config['paths']['build_file']}"
-      run "dd if=/dev/zero of=#{@config['paths']['build_file']} bs=1M count=#{@config['root_size']}"
+      run "dd if=/dev/zero of=#{@config['paths']['build_file']} \
+        bs=1M count=#{@config['root_size']}"
       run "mkfs.ext2 -F #{@config['paths']['build_file']}"
       puts "Mounting FS at #{@config['paths']['build']}"
       FileUtils.mkdir_p @config['paths']['build']
-      run "mount #{@config['paths']['build_file']} #{@config['paths']['build']}"
+      run "mount #{@config['paths']['build_file']} \
+        #{@config['paths']['build']}"
     end
 
     def install_packages
@@ -82,15 +88,17 @@ module Dock0
     end
 
     def finalize
-      puts "Packing up root FS"
+      puts 'Packing up root FS'
       run "umount #{@config['paths']['build']}"
-      run "mksquashfs #{@config['paths']['build_file']} #{@config['paths']['mount']}/root.fs.sfs"
-      puts "Unmounting target device"
+      run "mksquashfs #{@config['paths']['build_file']} \
+        #{@config['paths']['mount']}/root.fs.sfs"
+      puts 'Unmounting target device'
       run "umount #{@config['paths']['mount']}"
     end
 
     def easy_mode
       prepare_device
+      prepare_root
       install_packages
       apply_overlay
       run_scripts
