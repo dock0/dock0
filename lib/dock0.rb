@@ -1,6 +1,6 @@
 require 'yaml'
 require 'fileutils'
-require 'english'
+require 'English'
 
 ##
 # Dock0 provides an interface for building Arch images
