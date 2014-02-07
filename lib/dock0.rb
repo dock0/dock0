@@ -88,6 +88,7 @@ module Dock0
     end
 
     def finalize
+      sleep 5
       puts 'Packing up root FS'
       run "umount #{@config['paths']['build']}"
       run "mksquashfs #{@config['paths']['build_file']} \
