@@ -4,6 +4,7 @@ dock0
 [![Gem Version](https://badge.fury.io/rb/dock0.png)](http://badge.fury.io/rb/dock0)
 [![Dependency Status](https://gemnasium.com/akerl/dock0.png)](https://gemnasium.com/akerl/dock0)
 [![Code Climate](https://codeclimate.com/github/akerl/dock0.png)](https://codeclimate.com/github/akerl/dock0)
+[![MIT Licensed](http://img.shields.io/badge/license-MIT-green.svg)](https://tldrlegal.com/license/mit-license)
 
 Dynamic Arch image generator for building a read-only host system for [Docker](https://www.docker.io)
 
@@ -11,7 +12,7 @@ Dynamic Arch image generator for building a read-only host system for [Docker](h
 
 This is basically a meta-script that builds Arch images. Its primary use is to build read-only Docker hosts for me, but it could realistically be repurposed for other kinds of minimal deployments.
 
-An example configuration can be found in [this repo](https://www.github.com/akerl/my_dock0).
+An example configuration can be found in [this repo](https://www.github.com/dock0/host_config).
 
 The dock0 command accepts a list of configuration files as arguments. It changes to the directory of the first file given, so all other files and configuration options can use relative pathing based from that location:
 
