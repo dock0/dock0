@@ -4,7 +4,6 @@ require 'English'
 
 ##
 # Dock0 provides an interface for building Arch images
-
 module Dock0
   class << self
     ##
@@ -17,7 +16,6 @@ module Dock0
 
   ##
   # An Image is an Arch system being built
-
   class Image
     attr_reader :device_path, :config
 

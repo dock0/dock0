@@ -1,10 +1,12 @@
 dock0
 =========
 
-[![Gem Version](https://badge.fury.io/rb/dock0.png)](http://badge.fury.io/rb/dock0)
-[![Dependency Status](https://gemnasium.com/akerl/dock0.png)](https://gemnasium.com/akerl/dock0)
-[![Code Climate](https://codeclimate.com/github/akerl/dock0.png)](https://codeclimate.com/github/akerl/dock0)
-[![MIT Licensed](http://img.shields.io/badge/license-MIT-green.svg)](https://tldrlegal.com/license/mit-license)
+[![Gem Version](https://img.shields.io/gem/v/dock0.svg)](https://rubygems.org/gems/dock0)
+[![Dependency Status](https://img.shields.io/gemnasium/akerl/dock0.svg)](https://gemnasium.com/akerl/dock0)
+[![Code Climate](https://img.shields.io/codeclimate/github/akerl/dock0.svg)](https://codeclimate.com/github/akerl/dock0)
+[![Coverage Status](https://img.shields.io/coveralls/akerl/dock0.svg)](https://coveralls.io/r/akerl/dock0)
+[![Build Status](https://img.shields.io/travis/akerl/dock0.svg)](https://travis-ci.org/akerl/dock0)
+[![MIT Licensed](https://img.shields.io/badge/license-MIT-green.svg)](https://tldrlegal.com/license/mit-license)
 
 Dynamic Arch image generator for building a read-only host system for [Docker](https://www.docker.io)
 
