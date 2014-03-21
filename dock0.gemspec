@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'dock0'
-  s.version     = '0.0.6'
+  s.version     = '0.0.8'
   s.date        = Time.now.strftime("%Y-%m-%d")
 
   s.summary     = 'Builds a read-only Arch host for Docker'

@@ -99,10 +99,10 @@ module Dock0
     end
 
     def cleanup
-      puts 'Unmounting target device'
-      run "umount #{@config['paths']['mount']}"
       puts 'Removing temporary build image'
       File.unlink @config['paths']['build_file']
+      puts 'Unmounting target device'
+      run "umount #{@config['paths']['mount']}"
     end
 
     def easy_mode
