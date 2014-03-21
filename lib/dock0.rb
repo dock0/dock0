@@ -26,6 +26,7 @@ module Dock0
       @config = configs.each_with_object({}) do |path, obj|
         obj.merge! YAML.load(File.read(path))
       end
+      @stamp = Time.new.strftime '%F-%H%M'
     end
 
     def run(cmd)
@@ -64,6 +65,9 @@ module Dock0
       puts "Applying overlay from #{@config['paths']['overlay']}"
       overlay_path = @config['paths']['overlay'] + '/.'
       FileUtils.cp_r overlay_path, @config['paths']['build']
+      File.open("#{@config['paths']['build']}/.stamp", 'w') do |fh|
+        fh.write @stamp
+      end
     end
 
     def run_scripts
@@ -86,13 +90,14 @@ module Dock0
     end
 
     def finalize
-      sleep 5
       puts 'Packing up root FS'
+      mount_path = @config['paths']['mount']
+      squash_path = "#{mount_path}/#{@stamp}.fs.sfs"
       run "umount #{@config['paths']['build']}"
-      run "mksquashfs #{@config['paths']['build_file']} \
-        #{@config['paths']['mount']}/root.fs.sfs"
+      run "mksquashfs #{@config['paths']['build_file']} #{squash_path}"
+      File.symlink "#{@stamp}.fs.sfs", "#{mount_path}/root.fs.sfs"
       puts 'Unmounting target device'
-      run "umount #{@config['paths']['mount']}"
+      run "umount #{mount_path}"
     end
 
     def easy_mode
@@ -102,6 +107,7 @@ module Dock0
       apply_overlay
       run_scripts
       run_commands
+      sleep 5
       finalize
     end
   end
