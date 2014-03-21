@@ -96,8 +96,13 @@ module Dock0
       run "umount #{@config['paths']['build']}"
       run "mksquashfs #{@config['paths']['build_file']} #{squash_path}"
       File.symlink "#{@stamp}.fs.sfs", "#{mount_path}/root.fs.sfs"
+    end
+
+    def cleanup
       puts 'Unmounting target device'
       run "umount #{mount_path}"
+      puts 'Removing temporary build image'
+      File.unlink @config['paths']['build_file']
     end
 
     def easy_mode
@@ -109,6 +114,7 @@ module Dock0
       run_commands
       sleep 5
       finalize
+      cleanup
     end
   end
 end
