@@ -1,0 +1,4 @@
+---
+foo: override
+other: 6
+...

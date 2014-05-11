@@ -17,7 +17,7 @@ module Dock0
   ##
   # An Image is an Arch system being built
   class Image
-    attr_reader :device_path, :config
+    attr_reader :device_path, :config, :stamp
 
     ##
     # Make a new Image object with the given config
