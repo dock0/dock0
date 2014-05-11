@@ -15,6 +15,21 @@ module Dock0
   end
 
   ##
+  # Default config for images
+  DEFAULT_CONFIG = {
+    'paths' => {
+      'device' => '/dev/xvdc',
+      'mount' => '/opt/target',
+      'build_file' => '/opt/build_file',
+      'build' => '/opt/build_file_mount',
+      'package_list' => './packages',
+      'overlay' => './overlay',
+      'scripts' => './scripts'
+    },
+    'root_size' => 256,
+  }
+
+  ##
   # An Image is an Arch system being built
   class Image
     attr_reader :device_path, :config, :stamp
@@ -23,8 +38,8 @@ module Dock0
     # Make a new Image object with the given config
 
     def initialize(*configs)
-      @config = configs.each_with_object({}) do |path, obj|
-        obj.merge! YAML.load(File.read(path))
+      @config = configs.each_with_object(DEFAULT_CONFIG) do |path, obj|
+        obj = obj.merge YAML.load(File.read(path))
       end
       @stamp = Time.new.strftime '%F-%H%M'
     end
