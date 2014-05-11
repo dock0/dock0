@@ -37,7 +37,7 @@ module Dock0
 
     def prepare_device
       puts "Making new filesystem on #{@config['paths']['device']}"
-      run "mkfs.ext4 #{@config['paths']['device']}"
+      run "mkfs.ext4 -F #{@config['paths']['device']}"
       puts "Mounting filesystem on #{@config['paths']['mount']}"
       FileUtils.mkdir_p @config['paths']['mount']
       run "mount #{@config['paths']['device']} #{@config['paths']['mount']}"
