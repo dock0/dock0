@@ -23,7 +23,7 @@ describe Dock0 do
 
     describe '#run' do
       it 'runs a command' do
-        expect(image.run('echo "hello"')).to eql 'hello'
+        expect(image.run('echo "hello"')).to eql "hello\n"
       end
       it 'raises if the command fails' do
         expect { image.run('dasdks') }.to raise_error RuntimeError

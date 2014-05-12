@@ -26,7 +26,7 @@ module Dock0
       'overlay' => './overlay',
       'scripts' => './scripts'
     },
-    'root_size' => 256,
+    'root_size' => 512
   }
 
   ##
@@ -38,8 +38,10 @@ module Dock0
     # Make a new Image object with the given config
 
     def initialize(*configs)
-      @config = configs.each_with_object(DEFAULT_CONFIG) do |path, obj|
-        obj = obj.merge YAML.load(File.read(path))
+      @config = configs.each_with_object(DEFAULT_CONFIG.dup) do |path, obj|
+        new = YAML.load(File.read(path))
+        next unless new
+        obj.merge! new
       end
       @stamp = Time.new.strftime '%F-%H%M'
     end
