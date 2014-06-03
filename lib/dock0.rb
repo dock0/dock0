@@ -15,16 +15,33 @@ module Dock0
   end
 
   ##
+  # Default config for images
+  DEFAULT_CONFIG = {
+    'paths' => {
+      'device' => '/dev/xvdc',
+      'mount' => '/opt/target',
+      'build_file' => '/opt/build_file',
+      'build' => '/opt/build_file_mount',
+      'package_list' => './packages',
+      'overlay' => './overlay',
+      'scripts' => './scripts'
+    },
+    'root_size' => 512
+  }
+
+  ##
   # An Image is an Arch system being built
   class Image
-    attr_reader :device_path, :config
+    attr_reader :device_path, :config, :stamp
 
     ##
     # Make a new Image object with the given config
 
     def initialize(*configs)
-      @config = configs.each_with_object({}) do |path, obj|
-        obj.merge! YAML.load(File.read(path))
+      @config = configs.each_with_object(DEFAULT_CONFIG.dup) do |path, obj|
+        new = YAML.load(File.read(path))
+        next unless new
+        obj.merge! new
       end
       @stamp = Time.new.strftime '%F-%H%M'
     end
@@ -37,7 +54,7 @@ module Dock0
 
     def prepare_device
       puts "Making new filesystem on #{@config['paths']['device']}"
-      run "mkfs.ext2 #{@config['paths']['device']}"
+      run "mkfs.ext4 -F #{@config['paths']['device']}"
       puts "Mounting filesystem on #{@config['paths']['mount']}"
       FileUtils.mkdir_p @config['paths']['mount']
       run "mount #{@config['paths']['device']} #{@config['paths']['mount']}"
