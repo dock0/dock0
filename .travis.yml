@@ -6,7 +6,7 @@ rvm:
 - 2.1.0
 - 2.0.0
 - 1.9.3
-script: sudo bundle exec rake
+script: which bundle
 notifications:
   email: false
   irc:
