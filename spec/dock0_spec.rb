@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'fileutils'
 
 describe Dock0 do
   describe '#new' do
@@ -27,6 +28,20 @@ describe Dock0 do
       end
       it 'raises if the command fails' do
         expect { image.run('dasdks') }.to raise_error RuntimeError
+      end
+    end
+
+    describe '#prepare_device' do
+      it 'makes and mounts a filesystem' do
+        FileUtils.rm_rf '.test'
+        FileUtils.mkdir '.test'
+        `dd if=/dev/zero of=.test/fs count=10240 bs=1024 &>/dev/null`
+        image.prepare_device
+        expect(File.exist? '.test/fs').to be_truthy
+        expect(Dir.exist? '.test/mount').to be_truthy
+        expect(`file .test/fs`).to match(/filesystem/)
+        expect(`mount`).to match(%r{\.test/fs.*\.test/mount})
+        `umount .test/mount`
       end
     end
   end
