@@ -52,6 +52,10 @@ module Dock0
       fail "Failed running #{cmd}:\n#{results}"
     end
 
+    def run_chroot(cmd)
+      run "arch-chroot #{@config['paths']['build']} #{cmd}"
+    end
+
     def prepare_device
       puts "Making new filesystem on #{@config['paths']['device']}"
       run "mkfs.ext4 -F #{@config['paths']['device']}"
@@ -98,7 +102,7 @@ module Dock0
       cmds = @config['commands']
       cmds.fetch('chroot', []).each do |cmd|
         puts "Running #{cmd} in chroot"
-        run "arch-chroot #{@config['paths']['build']} #{cmd}"
+        run_chroot cmd
       end
       cmds.fetch('host', []).each do |cmd|
         puts "Running #{cmd} on host"
