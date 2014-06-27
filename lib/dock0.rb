@@ -99,7 +99,7 @@ module Dock0
     end
 
     def run_commands
-      cmds = @config['commands']
+      cmds = @config.fetch('commands', {})
       cmds.fetch('chroot', []).each do |cmd|
         puts "Running #{cmd} in chroot"
         run_chroot cmd
