@@ -26,7 +26,11 @@ module Dock0
       'overlay' => './overlay',
       'scripts' => './scripts'
     },
-    'root_size' => 512
+    'root_size' => 512,
+    'fs' => {
+      'type' => 'ext4',
+      'flags' => '-F'
+    }
   }
 
   ##
@@ -57,9 +61,9 @@ module Dock0
     end
 
     def prepare_device
-      @config['root_type'] ||= 'ext4'
       puts "Making new filesystem on #{@config['paths']['device']}"
-      run "mkfs.#{@config['root_type']} -F #{@config['paths']['device']}"
+      mkfs = "mkfs.#{@config['fs']['type']} #{@config['fs']['flags']}"
+      run "#{mkfs} #{@config['paths']['device']}"
       puts "Mounting filesystem on #{@config['paths']['mount']}"
       FileUtils.mkdir_p @config['paths']['mount']
       run "mount #{@config['paths']['device']} #{@config['paths']['mount']}"
