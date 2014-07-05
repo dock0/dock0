@@ -62,8 +62,7 @@ module Dock0
 
     def prepare_device
       puts "Making new filesystem on #{@config['paths']['device']}"
-      mkfs = "mkfs.#{@config['fs']['type']} #{@config['fs']['flags']}"
-      run "#{mkfs} #{@config['paths']['device']}"
+      run "mkfs.ext4 -F #{@config['paths']['device']}"
       puts "Mounting filesystem on #{@config['paths']['mount']}"
       FileUtils.mkdir_p @config['paths']['mount']
       run "mount #{@config['paths']['device']} #{@config['paths']['mount']}"
@@ -73,7 +72,8 @@ module Dock0
       puts "Making build FS at #{@config['paths']['build_file']}"
       run "dd if=/dev/zero of=#{@config['paths']['build_file']} \
         bs=1M count=#{@config['root_size']}"
-      run "mkfs.ext2 -F #{@config['paths']['build_file']}"
+      mkfs = "mkfs.#{@config['fs']['type']} #{@config['fs']['flags']}"
+      run "#{mkfs} #{@config['paths']['build_file']}"
       puts "Mounting FS at #{@config['paths']['build']}"
       FileUtils.mkdir_p @config['paths']['build']
       run "mount #{@config['paths']['build_file']} \
