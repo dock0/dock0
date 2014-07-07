@@ -97,7 +97,7 @@ module Dock0
     end
 
     def run_scripts
-      Dir.glob(@config['paths']['scripts'] + '/*.rb').each do |script|
+      Dir.glob(@config['paths']['scripts'] + '/*.rb').sort.each do |script|
         puts "Running #{script}"
         instance_eval File.read(script), script, 0
       end
