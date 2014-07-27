@@ -97,9 +97,12 @@ module Dock0
     end
 
     def run_scripts
+      runner = proc do |script|
+        Dir.chdir('.') { instance_eval File.read(script), script, 0 }
+      end
       Dir.glob(@config['paths']['scripts'] + '/*.rb').sort.each do |script|
         puts "Running #{script}"
-        instance_eval File.read(script), script, 0
+        runner.call(script)
       end
     end
 
