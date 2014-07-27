@@ -99,7 +99,7 @@ module Dock0
     def run_scripts
       runner = proc do |s|
         Dir.chdir('.') do
-          instance_eval "def #{st}\n#{File.read(s)}\nend", s, 0
+          instance_eval "def #{s}\n#{File.read(s)}\nend", s, 0
           send(s)
         end
       end
