@@ -1,6 +1,6 @@
 require 'yaml'
 require 'fileutils'
-require 'english'
+require 'English'
 
 ##
 # Dock0 provides an interface for building Arch images
@@ -47,6 +47,7 @@ module Dock0
         next unless new
         obj.merge! new
       end
+      @paths = @config['paths']
       @stamp = Time.new.strftime '%F-%H%M'
     end
 
@@ -61,23 +62,23 @@ module Dock0
     end
 
     def prepare_device
-      puts "Making new filesystem on #{@config['paths']['device']}"
-      run "mkfs.ext4 -F #{@config['paths']['device']}"
-      puts "Mounting filesystem on #{@config['paths']['mount']}"
-      FileUtils.mkdir_p @config['paths']['mount']
-      run "mount #{@config['paths']['device']} #{@config['paths']['mount']}"
+      puts "Making new filesystem on #{@paths['device']}"
+      run "mkfs.ext4 -F #{@paths['device']}"
+      puts "Mounting filesystem on #{@paths['mount']}"
+      FileUtils.mkdir_p @paths['mount']
+      run "mount #{@paths['device']} #{@paths['mount']}"
     end
 
     def prepare_root
-      puts "Making build FS at #{@config['paths']['build_file']}"
-      run "dd if=/dev/zero of=#{@config['paths']['build_file']} \
-        bs=1M count=#{@config['root_size']}"
-      mkfs = "mkfs.#{@config['fs']['type']} #{@config['fs']['flags']}"
-      run "#{mkfs} #{@config['paths']['build_file']}"
-      puts "Mounting FS at #{@config['paths']['build']}"
-      FileUtils.mkdir_p @config['paths']['build']
-      run "mount #{@config['paths']['build_file']} \
-        #{@config['paths']['build']}"
+      build_file = @paths['build_file']
+      filesystem = @config['fs']
+      puts "Making build FS at #{build_file}"
+      run "dd if=/dev/zero of=#{build_file} bs=1M count=#{@config['root_size']}"
+      mkfs = "mkfs.#{filesystem['type']} #{filesystem['flags']}"
+      run "#{mkfs} #{build_file}"
+      puts "Mounting FS at #{@paths['build']}"
+      FileUtils.mkdir_p @paths['build']
+      run "mount #{build_file} #{@paths['build']}"
     end
 
     def install_packages
