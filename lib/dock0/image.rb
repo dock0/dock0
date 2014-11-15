@@ -49,7 +49,7 @@ module Dock0
       build_file = @paths['build_file']
       filesystem = @config['fs']
       puts "Making build FS at #{build_file}"
-      run "dd if=/dev/zero of=#{build_file} bs=1M count=#{@config['root_size']}"
+      run "dd if=/dev/zero of=#{build_file} bs=1M count=#{@filesystem['size']}"
       mkfs = "mkfs.#{filesystem['type']} #{filesystem['flags']}"
       run "#{mkfs} #{build_file}"
       puts "Mounting FS at #{@paths['build']}"
