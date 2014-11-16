@@ -14,7 +14,8 @@ module Dock0
         'build' => '/opt/build_file_mount',
         'package_list' => './packages',
         'overlay' => './overlay',
-        'scripts' => './scripts'
+        'scripts' => './scripts',
+        'output' => './root.fs.sfs
       },
       'fs' => {
         'size' => 512,
