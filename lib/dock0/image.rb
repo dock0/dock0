@@ -15,7 +15,7 @@ module Dock0
         'package_list' => './packages',
         'overlay' => './overlay',
         'scripts' => './scripts',
-        'output' => './root.fs.sfs
+        'output' => './root.fs.sfs'
       },
       'fs' => {
         'size' => 512,
