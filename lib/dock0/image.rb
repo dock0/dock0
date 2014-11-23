@@ -97,7 +97,7 @@ module Dock0
     def finalize
       puts 'Packing up root FS'
       run "umount #{@paths['build']}"
-      FileUtls.rm_f @paths['output']
+      FileUtils.rm_f @paths['output']
       run "mksquashfs #{@paths['build_file']} #{@paths['output']}"
     end
 
