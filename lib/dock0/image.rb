@@ -2,9 +2,9 @@ require 'yaml'
 require 'fileutils'
 require 'English'
 
-##
-# An Image is an Arch system being built
 module Dock0
+  ##
+  # An Image is an Arch system being built
   class Image
     attr_reader :device_path, :config, :stamp
 
@@ -43,7 +43,7 @@ module Dock0
     end
 
     def run_chroot(cmd)
-      run "arch-chroot #{@config['paths']['build']} #{cmd}"
+      run "arch-chroot #{@paths['build']} #{cmd}"
     end
 
     def prepare_root
@@ -59,16 +59,16 @@ module Dock0
     end
 
     def install_packages
-      File.read(@config['paths']['package_list']).split("\n").each do |package|
+      File.read(@paths['package_list']).split("\n").each do |package|
         puts "Installing #{package}"
-        run "pacstrap -G -M #{@config['paths']['build']} #{package}"
+        run "pacstrap -G -M #{@paths['build']} #{package}"
       end
     end
 
     def apply_overlay
-      puts "Applying overlay from #{@config['paths']['overlay']}"
-      overlay_path = @config['paths']['overlay'] + '/.'
-      FileUtils.cp_r overlay_path, @config['paths']['build']
+      puts "Applying overlay from #{@paths['overlay']}"
+      overlay_path = @paths['overlay'] + '/.'
+      FileUtils.cp_r overlay_path, @paths['build']
     end
 
     def run_script(script)
@@ -76,7 +76,7 @@ module Dock0
     end
 
     def run_scripts
-      Dir.glob(@config['paths']['scripts'] + '/*.rb').sort.each do |script|
+      Dir.glob(@paths['scripts'] + '/*.rb').sort.each do |script|
         puts "Running #{script}"
         run_script script
       end
@@ -96,9 +96,9 @@ module Dock0
 
     def finalize
       puts 'Packing up root FS'
-      squash_path = @config['paths']['output']
-      run "umount #{@config['paths']['build']}"
-      run "mksquashfs #{@config['paths']['build_file']} #{squash_path}"
+      squash_path = @paths['output']
+      run "umount #{@paths['build']}"
+      run "mksquashfs -noappend #{@paths['build_file']} #{squash_path}"
     end
 
     def cleanup
