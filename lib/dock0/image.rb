@@ -96,14 +96,14 @@ module Dock0
 
     def finalize
       puts 'Packing up root FS'
-      squash_path = @paths['output']
       run "umount #{@paths['build']}"
-      run "mksquashfs -noappend #{@paths['build_file']} #{squash_path}"
+      File.unlink @paths['output']
+      run "mksquashfs #{@paths['build_file']} #{@paths['output']}"
     end
 
     def cleanup
       puts 'Removing temporary build image'
-      File.unlink @config['paths']['build_file']
+      File.unlink @paths['build_file']
     end
 
     def easy_mode
