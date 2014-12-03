@@ -13,7 +13,7 @@ Mercenary.program(:dock0) do |p|
     c.description 'Build a root image'
 
     c.action do |args, _|
-      Dock0.easy_mode Dock0::Image, args
+      Dock0.easy_mode :Image, args
       puts 'All done!'
     end
   end
@@ -23,7 +23,7 @@ Mercenary.program(:dock0) do |p|
     c.description 'Build a configuration bundle'
 
     c.action do |args, _|
-      Dock0.easy_mode Dock0::Config, args
+      Dock0.easy_mode :Config, args
       puts 'All done!'
     end
   end
