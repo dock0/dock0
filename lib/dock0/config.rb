@@ -8,7 +8,8 @@ module Dock0
     DEFAULT_CONFIG = {
       'paths' => {
         'templates' => './templates',
-        'build' => './build'
+        'build' => './build/',
+        'output' => './build.tar.gz'
       }
     }
 
@@ -30,7 +31,10 @@ module Dock0
     end
 
     def easy_mode
+      cleanup @paths.values_at('build', 'output')
       render_templates
+      finalize
+      cleanup @paths.values_at('build')
     end
   end
 end

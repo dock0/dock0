@@ -68,19 +68,15 @@ module Dock0
       run "mksquashfs #{@paths['build_file']} #{@paths['output']}"
     end
 
-    def cleanup
-      puts 'Removing temporary build image'
-      File.unlink @paths['build_file']
-    end
-
     def easy_mode
+      cleanup @paths.values_at('build_file', 'build', 'output')
       prepare_root
       install_packages
       apply_overlay
       run_scripts
       run_commands
       finalize
-      cleanup
+      cleanup @paths.values_at('build_file', 'build')
     end
   end
 end

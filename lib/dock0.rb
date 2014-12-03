@@ -1,5 +1,6 @@
 require 'yaml'
 require 'English'
+require 'fileutils'
 
 ##
 # Dock0 provides an interface for building Arch images
@@ -55,6 +56,11 @@ module Dock0
         puts "Running #{script}"
         run_script script
       end
+    end
+
+    def cleanup(list)
+      puts "Removing: #{list.join(', ')}"
+      FileUtils.rm_rf list
     end
   end
 end
