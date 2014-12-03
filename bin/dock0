@@ -6,7 +6,7 @@ require 'mercenary'
 Mercenary.program(:dock0) do |p|
   p.version Dock0::VERSION
   p.description 'Tool for creating server components'
-  p.syntax 'dock0 [command] CONFIG1 [... CONFIGN]'
+  p.syntax 'dock0 <subcommand> [args]'
 
   p.command(:image) do |c|
     c.syntax 'image CONFIG1 [... CONFIGN]'
