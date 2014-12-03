@@ -4,7 +4,7 @@ module Dock0
   ##
   # An Image is a rootfs for a system
   class Image < Base
-    def default_config
+    def default_config # rubocop:disable Metrics/MethodLength
       {
         'paths' => {
           'build_file' => './build_file',
