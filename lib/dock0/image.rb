@@ -6,8 +6,8 @@ module Dock0
   class Image < Base
     DEFAULT_CONFIG = {
       'paths' => {
-        'build_file' => '/opt/build_file',
-        'build' => '/opt/build_file_mount',
+        'build_file' => './build_file',
+        'build' => './build_file_mount',
         'package_list' => './packages',
         'overlay' => './overlay',
         'scripts' => './scripts',
