@@ -79,7 +79,6 @@ module Dock0
       apply_overlay
       run_scripts
       run_commands
-      sleep 5
       finalize
       cleanup
     end
