@@ -1,6 +1,9 @@
+$:.unshift File.expand_path('../lib/', __FILE__)
+require 'dock0/version'
+
 Gem::Specification.new do |s|
   s.name        = 'dock0'
-  s.version     = '0.1.4'
+  s.version     = Dock0::VERSION
   s.date        = Time.now.strftime("%Y-%m-%d")
 
   s.summary     = 'Builds a read-only Arch host for Docker'
@@ -13,6 +16,8 @@ Gem::Specification.new do |s|
   s.files       = `git ls-files`.split
   s.test_files  = `git ls-files spec/*`.split
   s.executables = ['dock0']
+
+  s.add_dependency 'mercenary', '~> 0.3.4'
 
   s.add_development_dependency 'rubocop', '~> 0.27.0'
   s.add_development_dependency 'rake', '~> 10.4.0'

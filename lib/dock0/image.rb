@@ -1,13 +1,9 @@
-require 'yaml'
 require 'fileutils'
-require 'English'
 
 module Dock0
   ##
-  # An Image is an Arch system being built
-  class Image
-    attr_reader :device_path, :config, :stamp
-
+  # An Image is a rootfs for a system
+  class Image < Base
     DEFAULT_CONFIG = {
       'paths' => {
         'build_file' => '/opt/build_file',
@@ -23,24 +19,6 @@ module Dock0
         'flags' => '-F'
       }
     }
-
-    ##
-    # Make a new Image object with the given config
-
-    def initialize(*configs)
-      @config = configs.each_with_object(DEFAULT_CONFIG.dup) do |path, obj|
-        new = YAML.load(File.read(path))
-        next unless new
-        obj.merge! new
-      end
-      @paths = @config['paths']
-    end
-
-    def run(cmd)
-      results = `#{cmd} 2>&1`
-      return results if $CHILD_STATUS.success?
-      fail "Failed running #{cmd}:\n#{results}"
-    end
 
     def run_chroot(cmd)
       run "arch-chroot #{@paths['build']} #{cmd}"
@@ -69,17 +47,6 @@ module Dock0
       puts "Applying overlay from #{@paths['overlay']}"
       overlay_path = @paths['overlay'] + '/.'
       FileUtils.cp_r overlay_path, @paths['build']
-    end
-
-    def run_script(script)
-      Dir.chdir('.') { instance_eval File.read(script), script, 0 }
-    end
-
-    def run_scripts
-      Dir.glob(@paths['scripts'] + '/*.rb').sort.each do |script|
-        puts "Running #{script}"
-        run_script script
-      end
     end
 
     def run_commands

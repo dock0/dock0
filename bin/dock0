@@ -1,8 +1,30 @@
 #!/usr/bin/env ruby
 
 require 'dock0'
+require 'mercenary'
 
-Dir.chdir File.dirname(ARGV.first)
-Dock0.new(*ARGV).easy_mode
+Mercenary.program(:dock0) do |p|
+  p.version Dock0::VERSION
+  p.description 'Tool for creating server components'
+  p.syntax 'dock0 [command] CONFIG1 [... CONFIGN]'
 
-puts 'All done!'
+  p.command(:image) do |c|
+    c.syntax 'image CONFIG1 [... CONFIGN]'
+    c.description 'Build a root image'
+
+    c.action do |args, _|
+      Dock0.easy_mode Dock0::Image, args
+      puts 'All done!'
+    end
+  end
+
+  p.command(:config) do |c|
+    c.syntax 'config CONFIG1 [... CONFIGN]'
+    c.description 'Build a configuration bundle'
+
+    c.action do |args, _|
+      Dock0.easy_mode Dock0::Config, args
+      puts 'All done!'
+    end
+  end
+end
