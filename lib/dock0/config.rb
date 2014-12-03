@@ -8,7 +8,7 @@ module Dock0
     DEFAULT_CONFIG = {
       'paths' => {
         'templates' => './templates',
-        'build' => './build/',
+        'build' => './build/config',
         'output' => './build.tar.gz'
       }
     }
@@ -28,6 +28,11 @@ module Dock0
         FileUtils.mkdir_p File.dirname(target_path)
         File.open(target_path, 'w') { |fh| fh.write parsed }
       end
+    end
+
+    def finalize
+      tar = Dir.chdir(File.dirname(@paths['build'])) { run 'tar cz .' }
+      File.open(@paths['output'], 'w') { |fh| fh << tar }
     end
 
     def easy_mode
