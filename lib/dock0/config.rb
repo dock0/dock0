@@ -5,14 +5,16 @@ module Dock0
   ##
   # A Config is a system-specific customization layer
   class Config < Base
-    DEFAULT_CONFIG = {
-      'paths' => {
-        'templates' => './templates',
-        'scripts' => './scripts',
-        'build' => './build/config',
-        'output' => './build.tar.gz'
+    def default_config
+      {
+        'paths' => {
+          'templates' => './templates',
+          'scripts' => './scripts',
+          'build' => './build/config',
+          'output' => './build.tar.gz'
+        }
       }
-    }
+    end
 
     def templates
       Dir.chdir(@paths['templates']) do

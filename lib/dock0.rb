@@ -26,19 +26,21 @@ module Dock0
   class Base
     attr_reader :config
 
-    DEFAULT_CONFIG = {
-      'paths' => {
-        'scripts' => './scripts'
-      }
-    }
-
     def initialize(*configs)
-      @config = configs.each_with_object(DEFAULT_CONFIG.dup) do |path, obj|
+      @config = configs.each_with_object(default_config) do |path, obj|
         new = YAML.load(File.read(path))
         next unless new
         obj.merge! new
       end
       @paths = @config['paths']
+    end
+
+    def default_config
+      {
+        'paths' => {
+          'scripts' => './scripts'
+        }
+      }
     end
 
     def run(cmd)

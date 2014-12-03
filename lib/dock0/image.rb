@@ -4,21 +4,23 @@ module Dock0
   ##
   # An Image is a rootfs for a system
   class Image < Base
-    DEFAULT_CONFIG = {
-      'paths' => {
-        'build_file' => './build_file',
-        'build' => './build_file_mount',
-        'package_list' => './packages',
-        'overlay' => './overlay',
-        'scripts' => './scripts',
-        'output' => './root.fs.sfs'
-      },
-      'fs' => {
-        'size' => 512,
-        'type' => 'ext4',
-        'flags' => '-F'
+    def default_config
+      {
+        'paths' => {
+          'build_file' => './build_file',
+          'build' => './build_file_mount',
+          'package_list' => './packages',
+          'overlay' => './overlay',
+          'scripts' => './scripts',
+          'output' => './root.fs.sfs'
+        },
+        'fs' => {
+          'size' => 512,
+          'type' => 'ext4',
+          'flags' => '-F'
+        }
       }
-    }
+    end
 
     def run_chroot(cmd)
       run "arch-chroot #{@paths['build']} #{cmd}"
