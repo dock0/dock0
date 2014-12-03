@@ -24,6 +24,7 @@ module Dock0
 
     def render_templates
       templates.each do |path|
+        puts "Templating #{path}"
         template = File.read "#{@paths['templates']}/#{path}"
         parsed = ERB.new(template, nil, '<>').result(binding)
 
@@ -34,6 +35,7 @@ module Dock0
     end
 
     def finalize
+      puts "Packing config into #{@paths['output']}"
       tar = Dir.chdir(File.dirname(@paths['build'])) { run 'tar cz .' }
       File.open(@paths['output'], 'w') { |fh| fh << tar }
     end
