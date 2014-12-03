@@ -27,4 +27,9 @@ Mercenary.program(:dock0) do |p|
       puts 'All done!'
     end
   end
+
+  p.action do
+    puts p
+    exit
+  end
 end
