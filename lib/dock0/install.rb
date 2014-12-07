@@ -12,12 +12,13 @@ module Dock0
           'scripts' => './scripts',
           'build' => './build'
         },
+        'org' => 'dock0',
         'artifacts' => []
       }
     end
 
     def build_url(artifact)
-      org = @config[:org]
+      org = @config['org']
       name, version, file = artifact.values_at('name', 'version', 'file')
       "https://github.com/#{org}/#{name}/releases/download/#{version}/#{file}"
     end
