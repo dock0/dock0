@@ -25,7 +25,7 @@ module Dock0
     end
 
     def build_path(artifact)
-      "#{artifact['name']}/#{artifact['file']}"
+      "#{artifact['name']}/#{artifact['version']}/#{artifact['file']}"
     end
 
     def qualify_path(path)
