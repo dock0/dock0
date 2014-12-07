@@ -70,3 +70,4 @@ end
 require 'dock0/version'
 require 'dock0/image'
 require 'dock0/config'
+require 'dock0/install'

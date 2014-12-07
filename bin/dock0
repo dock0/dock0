@@ -28,6 +28,16 @@ Mercenary.program(:dock0) do |p|
     end
   end
 
+  p.command(:install) do |c|
+    c.syntax 'install CONFIG1 [... CONFIGN]'
+    c.description 'Build/update a install'
+
+    c.action do |args, _|
+      Dock0.easy_mode :Install, args
+      puts 'All done!'
+    end
+  end
+
   p.action do
     puts p
     exit 1
