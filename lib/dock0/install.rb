@@ -75,17 +75,10 @@ module Dock0
       end
     end
 
-    def finalize
-      puts "Packing config into #{@paths['output']}"
-      tar = Dir.chdir(File.dirname(@paths['build'])) { run 'tar cz .' }
-      File.open(@paths['output'], 'w') { |fh| fh << tar }
-    end
-
     def easy_mode
       load_artifacts
       render_templates
       run_scripts
-      finalize
     end
   end
 end
