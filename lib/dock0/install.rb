@@ -10,7 +10,8 @@ module Dock0
         'paths' => {
           'templates' => './templates',
           'scripts' => './scripts',
-          'build' => './build'
+          'build' => './build',
+          'base' => '/'
         },
         'org' => 'dock0',
         'artifacts' => []
@@ -27,6 +28,10 @@ module Dock0
       "#{artifact['name']}/#{artifact['file']}"
     end
 
+    def qualify_path(path)
+      "#{@paths['build']}/#{@paths['base']}/#{path}"
+    end
+
     def download(artifact)
       url, path = artifact.values_at('url', 'full_path')
       puts "Downloading #{url} to #{path}"
@@ -41,16 +46,16 @@ module Dock0
     end
 
     def link(artifact)
-      full_link_path = "#{@paths['build']}/#{artifact['link']}"
+      full_link_path = qualify_path artifact['link']
       FileUtils.mkdir_p File.dirname(full_link_path)
-      FileUtils.ln_sf artifact['path'], full_link_path
+      FileUtils.ln_sf "#{@paths['base']}/#{artifact['path']}", full_link_path
     end
 
     def load_artifacts
       @config['artifacts'].each do |artifact|
         artifact['url'] ||= build_url(artifact)
         artifact['path'] ||= build_path(artifact)
-        artifact['full_path'] = "#{@paths['build']}/#{artifact['path']}"
+        artifact['full_path'] = qualify_path artifact['path']
         download artifact
         chmod artifact if artifact['mode']
         link(artifact) if artifact['link']
