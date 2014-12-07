@@ -42,6 +42,7 @@ module Dock0
 
     def link(artifact)
       full_link_path = "#{@paths['build']}/#{artifact['link']}"
+      FileUtils.mkdir_p File.dirname(full_link_path)
       FileUtils.ln_sf full_link_path, artifact['path']
     end
 
