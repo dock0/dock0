@@ -37,7 +37,7 @@ module Dock0
     end
 
     def chmod(artifact)
-      File.chmod(artifact['mode'], full_path) if artifact['mode']
+      File.chmod(artifact['mode'], full_path)
     end
 
     def link(artifact)
@@ -51,7 +51,7 @@ module Dock0
         artifact['path'] ||= build_path(artifact)
         artifact['full_path'] = "#{@paths['build']}/#{artifact['path']}"
         download artifact
-        chmod artifact
+        chmod artifact if artifact['mode']
         link(artifact) if artifact['link']
       end
     end
