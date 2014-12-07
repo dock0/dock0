@@ -41,7 +41,8 @@ module Dock0
     end
 
     def link(artifact)
-      FileUtils.ln_sf artifact['link'], artifact['path']
+      full_link_path = "#{@paths['build']}/#{artifact['link']}"
+      FileUtils.ln_sf full_link_path, artifact['path']
     end
 
     def load_artifacts
