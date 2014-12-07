@@ -1,5 +1,6 @@
 require 'fileutils'
 require 'open-uri'
+require 'pathname'
 
 module Dock0
   ##
@@ -48,7 +49,10 @@ module Dock0
     def link(artifact)
       full_link_path = qualify_path artifact['link']
       FileUtils.mkdir_p File.dirname(full_link_path)
-      FileUtils.ln_sf "#{@paths['base']}/#{artifact['path']}", full_link_path
+      relative_path = Pathname(artifact['path']).relative_path_from(
+        Pathname(File.dirname(full_link_path))
+      )
+      FileUtils.ln_sf relative_path, full_link_path
     end
 
     def load_artifacts
