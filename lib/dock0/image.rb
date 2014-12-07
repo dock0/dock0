@@ -7,8 +7,8 @@ module Dock0
     def default_config # rubocop:disable Metrics/MethodLength
       {
         'paths' => {
-          'build_file' => './build_file',
-          'build' => './build_file_mount',
+          'build_file' => './root.fs',
+          'build' => './build',
           'package_list' => './packages',
           'overlay' => './overlay',
           'scripts' => './scripts',
