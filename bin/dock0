@@ -30,6 +30,6 @@ Mercenary.program(:dock0) do |p|
 
   p.action do
     puts p
-    exit
+    exit 1
   end
 end
