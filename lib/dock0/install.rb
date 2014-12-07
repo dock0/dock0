@@ -29,6 +29,7 @@ module Dock0
     def download(artifact)
       url, path = artifact.values_at('url', 'full_path')
       puts "Downloading #{url} to #{path}"
+      FileUtils.mkdir_p File.dirname(path)
       File.open(path, 'wb') do |fh|
         open(url, 'rb') { |request| fh.write request.read }
       end
@@ -46,7 +47,7 @@ module Dock0
       @config['artifacts'].each do |artifact|
         artifact['url'] ||= build_url(artifact)
         artifact['path'] ||= build_path(artifact)
-        artifact['full_path'] = "#{@config['build']}/#{artifact['path']}"
+        artifact['full_path'] = "#{@paths['build']}/#{artifact['path']}"
         download artifact
         chmod artifact
         link(artifact) if artifact['link']
