@@ -33,8 +33,14 @@ module Dock0
       "#{@paths['build']}/#{@paths['base']}/#{path}"
     end
 
+    def missing(path, artifact)
+      return true unless File.exist? path
+      puts "#{artifact['name']} (#{artifact['version']}) already loaded"
+    end
+
     def download(artifact)
       url, path = artifact.values_at('url', 'full_path')
+      return unless missing(path, artifact)
       puts "Downloading #{url} to #{path}"
       FileUtils.mkdir_p File.dirname(path)
       File.open(path, 'wb') do |fh|
