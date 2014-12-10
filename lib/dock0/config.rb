@@ -36,7 +36,9 @@ module Dock0
 
     def finalize
       puts "Packing config into #{@paths['output']}"
-      tar = Dir.chdir(File.dirname(@paths['build'])) { run 'tar cz .' }
+      tar = Dir.chdir(File.dirname(@paths['build'])) do
+        run 'tar -cz --owner=root --group=root .'
+      end
       File.open(@paths['output'], 'w') { |fh| fh << tar }
     end
 
