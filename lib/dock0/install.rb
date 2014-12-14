@@ -11,10 +11,10 @@ module Dock0
           'templates' => './templates',
           'scripts' => './scripts',
           'build' => './build',
-          'base' => '/',
+          'base' => '/'
         },
         'org' => 'dock0',
-        'artifacts' => [],
+        'artifacts' => []
       }
     end
 
