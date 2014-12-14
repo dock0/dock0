@@ -1,6 +1,5 @@
 require 'fileutils'
-require 'open-uri'
-require 'pathname'
+require 'menagerie'
 
 module Dock0
   ##
@@ -12,10 +11,10 @@ module Dock0
           'templates' => './templates',
           'scripts' => './scripts',
           'build' => './build',
-          'base' => '/'
+          'base' => '/',
         },
         'org' => 'dock0',
-        'artifacts' => []
+        'artifacts' => [],
       }
     end
 
@@ -25,50 +24,17 @@ module Dock0
       "https://github.com/#{org}/#{name}/releases/download/#{version}/#{file}"
     end
 
-    def build_path(artifact)
-      "#{artifact['name']}/#{artifact['version']}/#{artifact['file']}"
-    end
-
-    def qualify_path(path)
-      "#{@paths['build']}/#{@paths['base']}/#{path}"
-    end
-
-    def missing(path, artifact)
-      return true unless File.exist? path
-      puts "#{artifact['name']} (#{artifact['version']}) already loaded"
-    end
-
-    def download(artifact)
-      url, path = artifact.values_at('url', 'full_path')
-      return unless missing(path, artifact)
-      puts "Downloading #{url} to #{path}"
-      FileUtils.mkdir_p File.dirname(path)
-      File.open(path, 'wb') do |fh|
-        open(url, 'rb') { |request| fh.write request.read }
+    def artifacts
+      @config['artifacts'].map do |artifact|
+        artifact['url'] ||= build_url(artifact)
+        artifact
       end
     end
 
-    def chmod(artifact)
-      File.chmod(artifact['mode'], full_path)
-    end
-
-    def link(artifact)
-      full_link_path = qualify_path artifact['link']
-      FileUtils.mkdir_p File.dirname(full_link_path)
-      relative_path = Pathname(artifact['full_path']).relative_path_from(
-        Pathname(File.dirname(full_link_path))
-      )
-      FileUtils.ln_sf relative_path, full_link_path
-    end
-
     def load_artifacts
-      @config['artifacts'].each do |artifact|
-        artifact['url'] ||= build_url(artifact)
-        artifact['path'] ||= build_path(artifact)
-        artifact['full_path'] = qualify_path artifact['path']
-        download artifact
-        chmod artifact if artifact['mode']
-        link(artifact) if artifact['link']
+      Dir.chdir("#{@paths['build']}/#{@paths['base']}") do
+        menagerie = Menagerie.new @config['menagerie']
+        menagerie.create artifacts
       end
     end
 
