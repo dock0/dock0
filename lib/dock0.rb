@@ -49,6 +49,24 @@ module Dock0
       fail "Failed running #{cmd}:\n#{results}"
     end
 
+    def templates
+      Dir.chdir(@paths['templates']) do
+        Dir.glob('**/*').select { |x| File.file? x }
+      end
+    end
+
+    def render_templates(prefix)
+      templates.each do |path|
+        puts "Templating #{path}"
+        template = File.read "#{@paths['templates']}/#{path}"
+        parsed = ERB.new(template, nil, '<>').result(binding)
+
+        target_path = "#{@paths['build']}/#{prefix}/#{path}"
+        FileUtils.mkdir_p File.dirname(target_path)
+        File.open(target_path, 'w') { |fh| fh.write parsed }
+      end
+    end
+
     def run_script(script)
       Dir.chdir('.') { instance_eval File.read(script), script, 0 }
     end

@@ -16,24 +16,6 @@ module Dock0
       }
     end
 
-    def templates
-      Dir.chdir(@paths['templates']) do
-        Dir.glob('**/*').select { |x| File.file? x }
-      end
-    end
-
-    def render_templates
-      templates.each do |path|
-        puts "Templating #{path}"
-        template = File.read "#{@paths['templates']}/#{path}"
-        parsed = ERB.new(template, nil, '<>').result(binding)
-
-        target_path = "#{@paths['build']}/templates/#{path}"
-        FileUtils.mkdir_p File.dirname(target_path)
-        File.open(target_path, 'w') { |fh| fh.write parsed }
-      end
-    end
-
     def finalize
       puts "Packing config into #{@paths['output']}"
       tar = Dir.chdir(File.dirname(@paths['build'])) do
@@ -44,7 +26,7 @@ module Dock0
 
     def easy_mode
       cleanup @paths.values_at('build', 'output')
-      render_templates
+      render_templates('templates')
       run_scripts
       finalize
       cleanup @paths.values_at('build')
