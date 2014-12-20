@@ -10,6 +10,11 @@ dock0
 
 Component generator for building Arch systems
 
+For information on how this is used, check out my blog posts:
+
+* [The original workflow](http://blog.akerl.org/2014/01/30/dock0-minimal-docker-host/)
+* [Newer layout, with more features](http://blog.akerl.org/2014/12/17/dock0-round-2/)
+
 ## Usage
 
 ### Build a rootfs
