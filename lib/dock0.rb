@@ -1,6 +1,7 @@
 require 'yaml'
 require 'English'
 require 'fileutils'
+require 'meld'
 
 ##
 # Dock0 provides an interface for building Arch images
@@ -30,7 +31,7 @@ module Dock0
       @config = configs.each_with_object(default_config) do |path, obj|
         new = YAML.load(File.read(path))
         next unless new
-        obj.merge! new
+        obj.deep_merge! new
       end
       @paths = @config['paths']
     end
