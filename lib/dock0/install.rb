@@ -19,7 +19,7 @@ module Dock0
     end
 
     def build_url(artifact)
-      org = @config['org']
+      org = artifact['org'] || @config['org']
       name, version, file = artifact.values_at('name', 'version', 'file')
       "https://github.com/#{org}/#{name}/releases/download/#{version}/#{file}"
     end
