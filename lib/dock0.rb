@@ -2,6 +2,7 @@ require 'yaml'
 require 'English'
 require 'fileutils'
 require 'meld'
+require 'cymbal'
 
 ##
 # Dock0 provides an interface for building Arch images
@@ -31,17 +32,13 @@ module Dock0
       @config = configs.each_with_object(default_config) do |path, obj|
         new = YAML.load(File.read(path))
         next unless new
-        obj.deep_merge! new
+        obj.deep_merge! Cymbal.symbolize(new)
       end
-      @paths = @config['paths']
+      @paths = @config[:paths]
     end
 
     def default_config
-      {
-        'paths' => {
-          'scripts' => './scripts'
-        }
-      }
+      { paths: { scripts: './scripts' } }
     end
 
     def run(cmd)
@@ -51,7 +48,7 @@ module Dock0
     end
 
     def templates
-      Dir.chdir(@paths['templates']) do
+      Dir.chdir(@paths[:templates]) do
         Dir.glob('**/*').select { |x| File.file? x }
       end
     end
@@ -59,10 +56,10 @@ module Dock0
     def render_templates(prefix)
       templates.each do |path|
         puts "Templating #{path}"
-        template = File.read "#{@paths['templates']}/#{path}"
+        template = File.read "#{@paths[:templates]}/#{path}"
         parsed = ERB.new(template, nil, '<>').result(binding)
 
-        target_path = "#{@paths['build']}/#{prefix}/#{path}"
+        target_path = "#{@paths[:build]}/#{prefix}/#{path}"
         FileUtils.mkdir_p File.dirname(target_path)
         File.open(target_path, 'w') { |fh| fh.write parsed }
       end
@@ -73,7 +70,7 @@ module Dock0
     end
 
     def run_scripts
-      Dir.glob(@paths['scripts'] + '/*.rb').sort.each do |script|
+      Dir.glob(@paths[:scripts] + '/*.rb').sort.each do |script|
         puts "Running #{script}"
         run_script script
       end
