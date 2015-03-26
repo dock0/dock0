@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'mercenary', '~> 0.3.4'
   s.add_dependency 'menagerie', '~> 1.0.0'
   s.add_dependency 'meld', '~> 1.0.0'
+  s.add_dependency 'cymbal', '~> 1.0.0'
 
   s.add_development_dependency 'rubocop', '~> 0.29.0'
   s.add_development_dependency 'rake', '~> 10.4.0'
