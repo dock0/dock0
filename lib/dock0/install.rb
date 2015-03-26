@@ -34,7 +34,7 @@ module Dock0
     def load_artifacts
       Dir.chdir("#{@paths[:build]}/#{@paths[:base]}") do
         menagerie = Menagerie.new @config[:menagerie]
-        menagerie.create artifacts
+        menagerie.add_release artifacts
       end
     end
 
