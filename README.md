@@ -3,9 +3,9 @@ dock0
 
 [![Gem Version](https://img.shields.io/gem/v/dock0.svg)](https://rubygems.org/gems/dock0)
 [![Dependency Status](https://img.shields.io/gemnasium/dock0/dock0.svg)](https://gemnasium.com/dock0/dock0)
-[![Code Climate](https://img.shields.io/codeclimate/github/dock0/dock0.svg)](https://codeclimate.com/github/dock0/dock0)
-[![Coverage Status](https://img.shields.io/coveralls/dock0/dock0.svg)](https://coveralls.io/r/dock0/dock0)
-[![Build Status](https://img.shields.io/travis/dock0/dock0.svg)](https://travis-ci.org/dock0/dock0)
+[![Build Status](https://img.shields.io/circleci/project/dock0/dock0.svg)](https://circleci.com/gh/dock0/dock0)
+[![Coverage Status](https://img.shields.io/codecov/c/github/dock0/dock0.svg)](https://codecov.io/github/dock0/dock0)
+[![Code Quality](https://img.shields.io/codacy/df0d7e6f7241482db8eb4d0b920c36ad.svg)](https://www.codacy.com/app/akerl/dock0)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-green.svg)](https://tldrlegal.com/license/mit-license)
 
 Component generator for building Arch systems
