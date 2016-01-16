@@ -1,5 +1,6 @@
+# frozen_string_literal: true
 ##
 # Set the version (needed for Mercenary -v)
 module Dock0
-  VERSION = '0.4.1'
+  VERSION = '0.4.1'.freeze
 end
