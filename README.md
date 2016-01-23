@@ -39,7 +39,7 @@ This builds a config tarball designed to be used to customize a rootfs. Here is 
 dock0 install config.yaml
 ```
 
-This downloads created artifacts and runs build scripts to combine precreated and dynamic components into a full system. Here is [an example configuration](https://github.com/dock0/vm_install)
+This downloads created artifacts and runs build scripts to combine precreated and dynamic components into a full system. Here is [an example configuration](https://github.com/dock0/vm_spec)
 
 ## Installation
 
