@@ -31,7 +31,7 @@ This will build a compressed rootfs from your configuration. Here is [an example
 dock0 config config.yaml
 ```
 
-This builds a config tarball designed to be used to customize a rootfs. Here is [an example configuration](https://github.com/dock0/vm_config)
+This builds a config tarball designed to be used to customize a rootfs. Here is [an example configuration](https://github.com/dock0/deploy_tool)
 
 ### Build a system deployment
 
