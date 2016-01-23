@@ -23,7 +23,7 @@ For information on how this is used, check out my blog posts:
 dock0 image config.yaml
 ```
 
-This will build a compressed rootfs from your configuration. Here is [an example configuration](https://github.com/dock0/vm_root)
+This will build a compressed rootfs from your configuration. Here is [an example configuration](https://github.com/dock0/rootfs)
 
 ### Build a config bundle
 
