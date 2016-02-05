@@ -44,7 +44,7 @@ module Dock0
     def run(cmd)
       results = `#{cmd} 2>&1`
       return results if $CHILD_STATUS.success?
-      fail "Failed running #{cmd}:\n#{results}"
+      raise "Failed running #{cmd}:\n#{results}"
     end
 
     def templates
