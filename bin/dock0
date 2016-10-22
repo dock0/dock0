@@ -3,6 +3,7 @@
 require 'dock0'
 require 'mercenary'
 
+# rubocop:disable Metrics/BlockLength
 Mercenary.program(:dock0) do |p|
   p.version Dock0::VERSION
   p.description 'Tool for creating server components'
