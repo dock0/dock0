@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'meld', '~> 1.1.0'
   s.add_dependency 'cymbal', '~> 1.0.0'
 
-  s.add_development_dependency 'rubocop', '~> 0.46.0'
+  s.add_development_dependency 'rubocop', '~> 0.47.0'
   s.add_development_dependency 'rake', '~> 12.0.0'
   s.add_development_dependency 'codecov', '~> 0.1.1'
   s.add_development_dependency 'rspec', '~> 3.5.0'
