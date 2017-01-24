@@ -30,7 +30,7 @@ module Dock0
 
     def initialize(*configs)
       @config = configs.each_with_object(default_config) do |path, obj|
-        new = YAML.load(File.read(path))
+        new = YAML.safe_load(File.read(path))
         next unless new
         obj.deep_merge! Cymbal.symbolize(new)
       end
