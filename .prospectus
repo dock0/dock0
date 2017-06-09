@@ -1,11 +1,23 @@
+Prospectus.extra_dep('file', 'prospectus_circleci')
+
 item do
-  expected do
-    static
-    set 'green'
+  noop
+
+  deps do
+    item do
+      name 'gems'
+
+      expected do
+        static
+        set 'green'
+      end
+
+      actual do
+        gemnasium
+        slug 'dock0/dock0'
+      end
+    end
   end
 
-  actual do
-    gemnasium
-    slug 'dock0/dock0'
-  end
+  extend ProspectusCircleci::Build.new('dock0/dock0')
 end
