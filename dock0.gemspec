@@ -1,13 +1,14 @@
-$:.unshift File.expand_path('../lib/', __FILE__)
+require 'English'
+$LOAD_PATH.unshift File.expand_path('../lib/', __FILE__)
 require 'dock0/version'
 
 Gem::Specification.new do |s|
   s.name        = 'dock0'
   s.version     = Dock0::VERSION
-  s.date        = Time.now.strftime("%Y-%m-%d")
+  s.date        = Time.now.strftime('%Y-%m-%d')
 
   s.summary     = 'Builds a read-only Arch host for Docker'
-  s.description = "Generates a read-only Arch host for running Docker containers"
+  s.description = 'Generates a read-only Arch host for running Docker containers' # rubocop:disable Metrics/LineLength
   s.authors     = ['Les Aker']
   s.email       = 'me@lesaker.org'
   s.homepage    = 'https://github.com/aker/dock0'
