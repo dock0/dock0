@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'cymbal', '~> 1.0.0'
 
   s.add_development_dependency 'rubocop', '~> 0.50.0'
+  s.add_development_dependency 'goodcop', '~> 0.0.1'
   s.add_development_dependency 'rake', '~> 12.1.0'
   s.add_development_dependency 'codecov', '~> 0.1.1'
   s.add_development_dependency 'rspec', '~> 3.6.0'
