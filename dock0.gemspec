@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'meld', '~> 1.1.0'
   s.add_dependency 'cymbal', '~> 1.0.0'
 
-  s.add_development_dependency 'rubocop', '~> 0.50.0'
+  s.add_development_dependency 'rubocop', '~> 0.51.0'
   s.add_development_dependency 'goodcop', '~> 0.1.0'
   s.add_development_dependency 'rake', '~> 12.1.0'
   s.add_development_dependency 'codecov', '~> 0.1.1'
