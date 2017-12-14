@@ -44,3 +44,4 @@ Mercenary.program(:dock0) do |p|
     exit 1
   end
 end
+# rubocop:enable Metrics/BlockLength
