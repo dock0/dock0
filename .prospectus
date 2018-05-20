@@ -1,23 +1,11 @@
+my_slug = 'dock0/dock0'
+
 Prospectus.extra_dep('file', 'prospectus_circleci')
+Prospectus.extra_dep('file', 'prospectus_gems')
 
 item do
   noop
 
-  deps do
-    item do
-      name 'gems'
-
-      expected do
-        static
-        set 'green'
-      end
-
-      actual do
-        gemnasium
-        slug 'dock0/dock0'
-      end
-    end
-  end
-
-  extend ProspectusCircleci::Build.new('dock0/dock0')
+  extend ProspectusGems::Gemspec.new
+  extend ProspectusCircleci::Build.new(my_slug)
 end
