@@ -2,7 +2,7 @@ dock0
 =========
 
 [![Gem Version](https://img.shields.io/gem/v/dock0.svg)](https://rubygems.org/gems/dock0)
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dock0/dock0/build.yaml?branch=main)](https://github.com/dock0/dock0/actions)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/dock0/dock0/build.yml?branch=main)](https://github.com/dock0/dock0/actions)
 [![MIT Licensed](https://img.shields.io/badge/license-MIT-green.svg)](https://tldrlegal.com/license/mit-license)
 
 Component generator for building Arch systems
