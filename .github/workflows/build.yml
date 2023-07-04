@@ -1,5 +1,6 @@
+---
 name: Build
-on:
+'on':
   pull_request:
   push:
 jobs:
@@ -23,10 +24,10 @@ jobs:
       if: github.ref_type == 'tag'
       run: bundle exec rake release
       env:
-        GEM_HOST_API_KEY: ${{ secrets.GEM_HOST_API_KEY }}
+        GEM_HOST_API_KEY: "${{ secrets.GEM_HOST_API_KEY }}"
     - name: Post to hook-exporter
-      run: ./.github/exporter.sh
+      run: "./.github/exporter.sh"
       env:
-        EXPORTER_TOKEN: ${{ secrets.EXPORTER_TOKEN }}
-        JOB_STATUS: ${{ job.status }}
-      if: ${{ always() }}
+        EXPORTER_TOKEN: "${{ secrets.EXPORTER_TOKEN }}"
+        JOB_STATUS: "${{ job.status }}"
+      if: "${{ always() }}"
