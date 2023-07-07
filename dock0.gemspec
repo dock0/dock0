@@ -23,11 +23,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'menagerie', '~> 1.1.1'
   s.add_dependency 'mercenary', '~> 0.4.0'
 
-  s.add_development_dependency 'codecov', '~> 0.6.0'
-  s.add_development_dependency 'fuubar', '~> 2.5.1'
-  s.add_development_dependency 'gem-release', '~> 2.2.2'
   s.add_development_dependency 'goodcop', '~> 0.9.7'
-  s.add_development_dependency 'rake', '~> 13.0.6'
-  s.add_development_dependency 'rspec', '~> 3.12.0'
-  s.add_development_dependency 'rubocop', '~> 1.54.1'
 end
