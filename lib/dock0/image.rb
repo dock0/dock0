@@ -47,7 +47,7 @@ module Dock0
 
     def apply_overlay
       puts "Applying overlay from #{@paths[:overlay]}"
-      overlay_path = @paths[:overlay] + '/.'
+      overlay_path = "#{@paths[:overlay]}/."
       FileUtils.cp_r overlay_path, @paths[:build]
     end
 

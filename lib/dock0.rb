@@ -30,7 +30,7 @@ module Dock0
 
     def initialize(*configs)
       @config = configs.each_with_object(default_config) do |path, obj|
-        new = YAML.safe_load(File.read(path))
+        new = YAML.safe_load_file(path)
         next unless new
         obj.deep_merge! Cymbal.symbolize(new)
       end
@@ -57,11 +57,11 @@ module Dock0
       templates.each do |path|
         puts "Templating #{path}"
         template = File.read "#{@paths[:templates]}/#{path}"
-        parsed = ERB.new(template, nil, '<>').result(binding)
+        parsed = ERB.new(template, trim_mode: '<>').result(binding)
 
         target_path = "#{@paths[:build]}/#{prefix}/#{path}"
         FileUtils.mkdir_p File.dirname(target_path)
-        File.open(target_path, 'w') { |fh| fh.write parsed }
+        File.write(target_path, parsed)
       end
     end
 
@@ -70,7 +70,7 @@ module Dock0
     end
 
     def run_scripts
-      Dir.glob(@paths[:scripts] + '/*.rb').sort.each do |script|
+      Dir.glob("#{@paths[:scripts]}/*.rb").each do |script|
         puts "Running #{script}"
         run_script script
       end
