@@ -1,0 +1,24 @@
+---
+name: Release
+'on':
+  push:
+    branches:
+    - main
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+    - name: Run base CI
+      uses: akerl/.github/actions/base-ruby@main
+    - name: Release
+      uses: rubygems/release-gem@v1
+    - name: Post to hook-exporter
+      uses: akerl/.github/actions/hook-exporter@main
+      with:
+        token: ${{ secrets.EXPORTER_TOKEN }}
+        status: ${{ job.status }}
+      if: always()
